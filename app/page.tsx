@@ -1,13 +1,47 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Facebook } from "lucide-react"
 
 export default function PortfolioPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [showMore, setShowMore] = useState(false)
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
   const withBasePath = (path: string) => `${basePath}${path}`
+
+  // Scroll animation hook
+  const useScrollAnimation = () => {
+    const [isVisible, setIsVisible] = useState(false)
+    const ref = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+          }
+        },
+        { threshold: 0.1 }
+      )
+
+      if (ref.current) {
+        observer.observe(ref.current)
+      }
+
+      return () => {
+        if (ref.current) {
+          observer.unobserve(ref.current)
+        }
+      }
+    }, [])
+
+    return { ref, isVisible }
+  }
+
+  // Create separate refs for each section
+  const educationRef = useScrollAnimation()
+  const seminarsRef = useScrollAnimation()
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -109,32 +143,78 @@ export default function PortfolioPage() {
             helping people accomplish their goals and improve their everyday lives. Let's collaborate to bring
             innovative solutions to life with clean code and thoughtful design.
           </p>
-          <Button variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-black">
-            READ MORE
+          
+          {showMore && (
+            <div className="max-w-3xl mb-6 text-sm leading-relaxed space-y-4 animate-in">
+              <p className="text-neutral-300">
+                As a UI/UX designer, I focus on creating intuitive interfaces that prioritize user experience while maintaining 
+                aesthetic appeal. My approach combines user research, wireframing, prototyping, and iterative testing to ensure 
+                every design decision serves a purpose. I specialize in responsive design, accessibility standards, and creating 
+                seamless user journeys across different devices and platforms.
+              </p>
+              <p className="text-neutral-300">
+                In front-end development, I bring designs to life using modern web technologies including React, TypeScript, 
+                and CSS frameworks like Tailwind. I emphasize performance optimization, clean code architecture, and component 
+                reusability. My experience includes building single-page applications, e-commerce platforms, and content 
+                management systems with a focus on fast load times and smooth user interactions.
+              </p>
+              <p className="text-neutral-300">
+                I bridge the gap between design and development by understanding both perspectives. This allows me to create 
+                designs that are not only visually appealing but also technically feasible and maintainable. Whether you need 
+                a complete website redesign, a mobile app interface, or a custom web application, I'm equipped to deliver 
+                solutions that meet your business objectives while exceeding user expectations.
+              </p>
+            </div>
+          )}
+          
+          <Button 
+            variant="outline" 
+            className="bg-transparent text-white border-white hover:bg-white hover:text-black"
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? 'READ LESS' : 'READ MORE'}
           </Button>
         </div>
       </section>
 
       {/* About Me Section */}
       <section id="about" className="py-24 bg-neutral-200">
-        <div className="container mx-auto px-6 max-w-4xl">
+        <div className="container mx-auto px-6 max-w-6xl">
           <div className="flex justify-center mb-12">
             <div className="border-4 border-black px-12 py-4">
               <h2 className="text-2xl font-bold tracking-wider">ABOUT ME</h2>
             </div>
           </div>
 
-          <div className="text-center space-y-4 text-sm leading-relaxed max-w-2xl mx-auto mb-8">
-            <p>
-              I'm a 22-year-old Front-end Developer and UI Designer based in the Philippines. I specialize in crafting
-              beautiful and functional web experiences. With expertise in UI/UX design, I believe that good design
-              solves problems and helps people accomplish their goals.
-            </p>
-            <p>
-              When I'm not coding, you'll find me exploring new design trends, learning emerging technologies, or
-              collaborating with fellow developers. I'm passionate about creating intuitive interfaces that make a real
-              difference in people's lives. Let's work together to build something extraordinary!
-            </p>
+          {/* Education */}
+          <div className="mb-16">
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="text-xl font-bold mb-6 text-center">EDUCATION</h3>
+              <div className="text-center">
+                <h4 className="font-bold text-lg mb-2">Bachelor of Science in Information Technology</h4>
+                <p className="text-gray-700 mb-2">Cebu Institute of Technology - University</p>
+                <p className="text-sm text-gray-600 mb-2">Natalio B. Bacalso Ave, Cebu City, Cebu 6000</p>
+                <p className="text-sm font-semibold text-blue-600">Expected Graduation: May 2026</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Seminars & Certifications */}
+          <div className="mb-16">
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="text-xl font-bold mb-6 text-center">SEMINARS & CERTIFICATIONS</h3>
+              <div className="space-y-4">
+                <div className="border-l-4 border-black pl-4">
+                  <h4 className="font-bold">AWS Academy Graduate - Cloud Foundations - Training Badge</h4>
+                  <p className="text-sm text-gray-600">2025, Amazon Web Services Training and Certification</p>
+                </div>
+                <div className="border-l-4 border-black pl-4">
+                  <h4 className="font-bold">2026 UI/UX PH</h4>
+                  <p className="text-sm text-gray-600">Saturday, September 27, 2025 | 9:00 AM - 06:00 PM</p>
+                  <p className="text-sm text-gray-600">SAFAD Theatre, University of San Carlos, Talamban Campus</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-center items-center gap-4 mb-16">
@@ -147,25 +227,25 @@ export default function PortfolioPage() {
 
           {/* Services */}
           <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <h3 className="text-xl font-bold mb-3">DESIGN</h3>
+            <div className="transform hover:scale-105 transition-all duration-300">
+              <h3 className="text-xl font-bold mb-3">UI/UX DESIGN</h3>
               <p className="text-sm text-neutral-600">
-                I can design the site based on your needs and suggestions. I can also design the site from scratch,
-                consulting with you every step of the way.
+                I create intuitive user interfaces and seamless user experiences. From wireframing to prototyping, 
+                I design solutions that are both beautiful and functional.
               </p>
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-3">DEVELOPMENT</h3>
+            <div className="transform hover:scale-105 transition-all duration-300">
+              <h3 className="text-xl font-bold mb-3">FRONT-END CODING</h3>
               <p className="text-sm text-neutral-600">
-                I can help you build a high-quality product using the latest web technologies. Professional development
-                tailored to your goals.
+                I bring designs to life with clean, responsive code. Specializing in React, TypeScript, and modern 
+                CSS frameworks to build fast, interactive web applications.
               </p>
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-3">MAINTENANCE</h3>
+            <div className="transform hover:scale-105 transition-all duration-300">
+              <h3 className="text-xl font-bold mb-3">DESIGN SYSTEMS</h3>
               <p className="text-sm text-neutral-600">
-                After the project is complete, I can provide ongoing support and maintenance to ensure everything runs
-                smoothly.
+                I develop scalable design systems and component libraries that ensure consistency across your 
+                entire product while maintaining development efficiency.
               </p>
             </div>
           </div>
