@@ -6,6 +6,8 @@ import { Github, Linkedin, Facebook } from "lucide-react"
 
 export default function PortfolioPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
+  const withBasePath = (path: string) => `${basePath}${path}`
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -21,7 +23,7 @@ export default function PortfolioPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <img src="/WKUZU.png" alt="WKUZU" className="h-10 w-auto" />
+            <img src={withBasePath("/WKUZU.png")} alt="WKUZU" className="h-10 w-auto" />
           </div>
           <div className="hidden md:flex items-center gap-8">
             <button onClick={() => scrollToSection("about")} className="text-white hover:text-neutral-300 transition">
@@ -84,7 +86,7 @@ export default function PortfolioPage() {
           <div className="bg-black flex items-end justify-start relative overflow-hidden">
             <div className="w-full md:w-[90%] h-full flex items-end justify-center">
               <img
-                src="/ejaysol.png"
+                src={withBasePath("/ejaysol.png")}
                 alt="Ephraim Jay A. Solasco"
                 className="h-full w-full object-cover object-top"
               />
@@ -183,14 +185,14 @@ export default function PortfolioPage() {
           <div className="mb-16">
             <h3 className="text-xl font-bold mb-8 text-center tracking-wider">USING NOW:</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <SkillItemWithImage src="/HTML5.svg" name="HTML5" />
-              <SkillItemWithImage src="/CSS3.svg" name="CSS3" />
-              <SkillItemWithImage src="/SASS.svg" name="SASS" />
-              <SkillItemWithImage src="/JAVASCRIPT.svg" name="JavaScript" />
-              <SkillItemWithImage src="/REACT.svg" name="React" />
-              <SkillItemWithImage src="/bootstrap.svg" name="Bootstrap" />
-              <SkillItemWithImage src="/git.svg" name="Git" />
-              <SkillItemWithImage src="/figma.svg" name="Figma" />
+              <SkillItemWithImage src={withBasePath("/HTML5.svg")} name="HTML5" />
+              <SkillItemWithImage src={withBasePath("/CSS3.svg")} name="CSS3" />
+              <SkillItemWithImage src={withBasePath("/SASS.svg")} name="SASS" />
+              <SkillItemWithImage src={withBasePath("/JAVASCRIPT.svg")} name="JavaScript" />
+              <SkillItemWithImage src={withBasePath("/REACT.svg")} name="React" />
+              <SkillItemWithImage src={withBasePath("/bootstrap.svg")} name="Bootstrap" />
+              <SkillItemWithImage src={withBasePath("/git.svg")} name="Git" />
+              <SkillItemWithImage src={withBasePath("/figma.svg")} name="Figma" />
             </div>
           </div>
 
@@ -198,10 +200,10 @@ export default function PortfolioPage() {
           <div className="mb-16">
             <h3 className="text-xl font-bold mb-8 text-center tracking-wider">LEARNING:</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <SkillItemWithImage src="/NODEJS.png" name="Node.js" />
-              <SkillItemWithImage src="/MySQL.svg" name="MySQL" />
-              <SkillItemWithImage src="/MONGODB.svg" name="MongoDB" />
-              <SkillItemWithImage src="/TYPESCRIPT.svg" name="TypeScript" />
+              <SkillItemWithImage src={withBasePath("/NODEJS.png")} name="Node.js" />
+              <SkillItemWithImage src={withBasePath("/MySQL.svg")} name="MySQL" />
+              <SkillItemWithImage src={withBasePath("/MONGODB.svg")} name="MongoDB" />
+              <SkillItemWithImage src={withBasePath("/TYPESCRIPT.svg")} name="TypeScript" />
             </div>
           </div>
 
@@ -209,12 +211,12 @@ export default function PortfolioPage() {
           <div>
             <h3 className="text-xl font-bold mb-8 text-center tracking-wider">OTHER SKILLS:</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <SkillItemWithImage src="/Adobe_After_Effects_CC_2026_icon.svg.png" name="After Effects" />
-              <SkillItemWithImage src="/Adobe_Illustrator_CC_icon.svg.png" name="Illustrator" />
-              <SkillItemWithImage src="/Adobe_Photoshop_CC_icon.svg.png" name="Photoshop" />
-              <SkillItemWithImage src="/Adobe_Premiere_Pro_CC_icon.svg.png" name="Premiere Pro" />
-              <SkillItemWithImage src="/affinity-logo-icon-hd.png" name="Affinity" />
-              <SkillItemWithImage src="/canva-icon.png" name="Canva" />
+              <SkillItemWithImage src={withBasePath("/Adobe_After_Effects_CC_2026_icon.svg.png")} name="After Effects" />
+              <SkillItemWithImage src={withBasePath("/Adobe_Illustrator_CC_icon.svg.png")} name="Illustrator" />
+              <SkillItemWithImage src={withBasePath("/Adobe_Photoshop_CC_icon.svg.png")} name="Photoshop" />
+              <SkillItemWithImage src={withBasePath("/Adobe_Premiere_Pro_CC_icon.svg.png")} name="Premiere Pro" />
+              <SkillItemWithImage src={withBasePath("/affinity-logo-icon-hd.png")} name="Affinity" />
+              <SkillItemWithImage src={withBasePath("/canva-icon.png")} name="Canva" />
               {/* <SkillItem icon="🇬🇧" name="ANGIELSKI (ENG)" color="#012169" />
               <SkillItem icon="🇪🇸" name="HISZPANSKI (SPN)" color="#C60B1E" />
               <SkillItem icon="©️" name="C++" color="#00599C" />
@@ -234,7 +236,7 @@ export default function PortfolioPage() {
         <div
           className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: "url(/placeholder.svg?height=1200&width=1200&query=mountain+landscape)",
+            backgroundImage: "none",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -249,13 +251,13 @@ export default function PortfolioPage() {
 
           <div className="grid md:grid-cols-3 gap-4">
             <div className="h-64 bg-neutral-800 rounded overflow-hidden">
-              <img src="/Portfolio%201.png" alt="Portfolio 1" className="w-full h-full object-cover" />
+              <img src={withBasePath("/Portfolio%201.png")} alt="Portfolio 1" className="w-full h-full object-cover" />
             </div>
             <div className="h-64 bg-neutral-800 rounded overflow-hidden">
-              <img src="/Portfolio%202.png" alt="Portfolio 2" className="w-full h-full object-cover" />
+              <img src={withBasePath("/Portfolio%202.png")} alt="Portfolio 2" className="w-full h-full object-cover" />
             </div>
             <div className="h-64 bg-neutral-800 rounded overflow-hidden">
-              <img src="/Portfolio%203.png" alt="Portfolio 3" className="w-full h-full object-cover" />
+              <img src={withBasePath("/Portfolio%203.png")} alt="Portfolio 3" className="w-full h-full object-cover" />
             </div>
           </div>
 

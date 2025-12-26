@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title: "Ephraim Jay A. Solasco - Portfolio",
   description: "Front-end Developer and UI Designer Portfolio",
   icons: {
-    icon: "/WKUZU.png",
-    apple: "/WKUZU.png",
+    icon: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/WKUZU.png`,
+    apple: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/WKUZU.png`,
   },
 }
 
